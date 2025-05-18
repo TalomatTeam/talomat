@@ -456,28 +456,33 @@
         }
     });
     
-    function frageVorlesen(text) {
-    const synth = window.speechSynthesis;
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "de-DE"; // Sprache auf Deutsch setzen
-    synth.cancel(); // Vorherige Sprachausgabe abbrechen
-    synth.speak(utterance);
-    }
-
     function frageVorlesen(index) {
     const frageText = fragen[index];
     const synth = window.speechSynthesis;
 
-    // Bestehendes Vorlesen stoppen
-    if (synth.speaking) {
-        synth.cancel();
-    }
+    const speakNow = () => {
+        if (synth.speaking) synth.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(frageText);
-    utterance.lang = 'de-DE'; // Deutsch
-    utterance.rate = 1; // Geschwindigkeit
-    synth.speak(utterance);
+        const utterance = new SpeechSynthesisUtterance(frageText);
+        utterance.lang = 'de-DE';
+
+        const voices = synth.getVoices();
+        const germanVoice = voices.find(v => v.lang.startsWith('de'));
+        if (germanVoice) {
+            utterance.voice = germanVoice;
+        }
+
+        synth.speak(utterance);
+    };
+
+    if (synth.getVoices().length === 0) {
+        // Stimmen sind noch nicht geladen – warte kurz
+        synth.onvoiceschanged = speakNow;
+    } else {
+        speakNow();
     }
+}
+
 
     function shareLink() {
     if (navigator.share) {
