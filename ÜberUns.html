@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Über Uns</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        h1 {
+            color: #000;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Hamburger-Button */
+        .hamburger {
+            font-size: 44px;
+            background: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        /* Menü */
+        nav {
+            line-height: 1;
+            position: fixed;
+            top: 80px;
+            right: 70px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            display: none;
+            min-width: 150px;
+            text-align: left;
+           
+        }
+
+        nav.aktiv {
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        nav li:hover {
+            background-color: #f0f0f0;
+        }
+
+       
+        nav li a {
+            display: block;
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hamburger-Menü Button -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+    <!-- Dropdown-Menü -->
+    <nav id="menu">
+        <ul>
+            <li><a href="Startseite.html">Startseite</a></li>
+            <li><a href="Barrierefreiheit.html">Barrierefreiheit</a></li>
+            <li><a href="Technik.html">Die Technik</a></li>
+        </ul>
+    </nav>
+
+    <h1>Über uns</h1>
+    <p>
+      Der <strong>Talomat</strong> ist ein interaktives Projekt, das im Rahmen des Projektkurses <strong>Informatik/Sozialwissenschaften</strong> an der <strong>Gesamtschule Uellendahl-Katernberg</strong> entstanden ist. 
+      Das Projekt wurde von den Schülern Jan und Elias aus dem Jahrgang Q1 entwickelt.
+    </p>
+
+    <p>
+      Ziel war es, ein digitales Tool zu entwickeln, das politische Bildung fördert und Jugendlichen auf verständliche Weise politische Positionen näherbringt. Der Talomat orientiert sich am bekannten Wahl-O-Mat und wurde von uns eigenständig programmiert und inhaltlich gestaltet.
+    </p>
+
+    <p>
+      Neben der technischen Umsetzung lag ein besonderer Fokus auf gesellschaftlicher Relevanz, Benutzerfreundlichkeit und Informationsgehalt. Alle Inhalte wurden sorgfältig recherchiert und an die Zielgruppe angepasst.
+    </p>
+
+
+    <p><strong>Kontakt bei Fragen oder Feedback:</strong><br />
+      (E-Mail-Adresse oder Schuladresse kann hier ergänzt werden.)
+    </p>
+
+    <script>
+        function toggleMenu() {
+    const menu = document.getElementById("menu");
+
+    // Falls das Menü geöffnet ist, schließen – sonst öffnen
+    if (menu.classList.contains("aktiv")) {
+        menu.classList.remove("aktiv");
+    } else {
+        // Erst alle anderen Menüs schließen (falls in Zukunft weitere hinzugefügt werden)
+        document.querySelectorAll("nav").forEach(m => m.classList.remove("aktiv"));
+        menu.classList.add("aktiv");
+    }
+}
+
+    document.addEventListener("click", function (event) {
+        const menu = document.getElementById("menu");
+        const hamburger = document.querySelector(".hamburger");
+
+        // Prüft, ob der Klick außerhalb des Menüs und des Hamburger-Buttons ist
+        if (menu.classList.contains("aktiv") && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+            menu.classList.remove("aktiv");
+        }
+    });
+    </script>
+</body>
+</html>

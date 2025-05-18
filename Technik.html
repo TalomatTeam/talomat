@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Impressum Talomat</title>
+    <style>
+    code {
+      background-color: #eee;
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        h1 {
+            color: #000;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Hamburger-Button */
+        .hamburger {
+            font-size: 44px;
+            background: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        /* Menü */
+        nav {
+            line-height: 1;
+            position: fixed;
+            top: 80px;
+            right: 70px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            display: none;
+            min-width: 150px;
+            text-align: left;
+           
+        }
+
+        nav.aktiv {
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        nav li:hover {
+            background-color: #f0f0f0;
+        }
+
+       
+        nav li a {
+            display: block;
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hamburger-Menü Button -->
+<button class="hamburger" onclick="toggleMenu()">☰</button>
+
+    <!-- Dropdown-Menü -->
+    <nav id="menu">
+        <ul>
+            <li><a href="Startseite.html">Startseite</a></li>
+            <li><a href="Barrierefreiheit.html">Barrierefreiheit</a></li>
+            <li><a href="ÜberUns.html">Über uns</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h1>Technik des Talomaten</h1>
+        <p>
+          Der Talomat ist ein interaktives Entscheidungstool, das Nutzer:innen dabei hilft, politische Positionen mit den Positionen von Parteien zu vergleichen. 
+          Im Folgenden wird erklärt, wie der Talomat technisch funktioniert, wie die Punktberechnung erfolgt und wie das Ergebnis ermittelt wird.
+        </p>
+    
+        <h2>1. Aufbau der Fragen</h2>
+        <p>
+          Der Talomat besteht aus einer Liste von Thesen, zu denen der Nutzer Stellung bezieht. Jede These hat drei Antwortmöglichkeiten:
+        </p>
+        <ul>
+          <li><strong>Zustimmen</strong> → Wert: <code>1</code></li>
+          <li><strong>Neutral</strong> → Wert: <code>0</code></li>
+          <li><strong>Ablehnen</strong> → Wert: <code>-1</code></li>
+        </ul>
+        <p>
+          Die Antworten werden in einem Array oder einer Datenstruktur gespeichert, z. B.:<br />
+          <code>[1, 0, -1, 1, ...]</code>
+        </p>
+    
+        <h2>2. Positionen der Parteien</h2>
+        <p>
+          Jede Partei hat für jede These ebenfalls eine Position, die genauso mit <code>1</code>, <code>0</code> oder <code>-1</code> codiert ist. 
+          Die Positionen werden vorher definiert, z. B. in einem JSON- oder JavaScript-Objekt:
+        </p>
+        <pre><code>{
+      "Partei A": [1, -1, 0, 1, ...],
+      "Partei B": [0, 0, -1, 1, ...],
+      ...
+    }</code></pre>
+    
+        <h2>3. Punkteberechnung</h2>
+        <p>
+          Für jede Partei wird die Übereinstimmung mit den Nutzerantworten berechnet. Dabei wird für jede These der Differenzbetrag zwischen Nutzer und Partei bestimmt:
+        </p>
+        <ul>
+          <li>Differenz: <code>diff = |antwort_user - antwort_partei|</code></li>
+          <li>Punkt: <code>2 - diff</code></li>
+        </ul>
+        <p>
+          So ergibt sich:
+        </p>
+        <ul>
+          <li>Identische Meinung (z. B. 1 und 1): <code>2 - 0 = 2 Punkte</code></li>
+          <li>Neutral vs. Meinung (z. B. 0 und 1): <code>2 - 1 = 1 Punkt</code></li>
+          <li>Gegenteil (z. B. 1 und -1): <code>2 - 2 = 0 Punkte</code></li>
+        </ul>
+    
+        <p>
+          Die Punkte jeder Partei werden aufsummiert und optional in Prozent umgerechnet:
+        </p>
+        <pre><code>punkte_partei = ∑ (2 - |antwort_user[i] - antwort_partei[i]|)</code></pre>
+    
+        <h2>4. Ergebnisanzeige</h2>
+        <p>
+          Die Parteien werden nach ihrer Gesamtpunktzahl absteigend sortiert. Das Ergebnis wird dann als Liste dargestellt.
+        </p>
+    
+      </section>
+      
+    <script>
+        function toggleMenu() {
+    const menu = document.getElementById("menu");
+
+    // Falls das Menü geöffnet ist, schließen – sonst öffnen
+    if (menu.classList.contains("aktiv")) {
+        menu.classList.remove("aktiv");
+    } else {
+        // Erst alle anderen Menüs schließen (falls in Zukunft weitere hinzugefügt werden)
+        document.querySelectorAll("nav").forEach(m => m.classList.remove("aktiv"));
+        menu.classList.add("aktiv");
+    }
+}
+
+    document.addEventListener("click", function (event) {
+        const menu = document.getElementById("menu");
+        const hamburger = document.querySelector(".hamburger");
+
+        // Prüft, ob der Klick außerhalb des Menüs und des Hamburger-Buttons ist
+        if (menu.classList.contains("aktiv") && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+            menu.classList.remove("aktiv");
+        }
+    });
+    </script>
+</body>
+</html>

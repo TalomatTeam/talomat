@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Impressum Talomat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        h1 {
+            color: #000;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Hamburger-Button */
+        .hamburger {
+            font-size: 48px;
+            background: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+    
+        /* Menü */
+        nav {
+            line-height: 1;
+            position: fixed;
+            top: 80px;
+            right: 70px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            display: none;
+            min-width: 150px;
+            text-align: left;
+           
+        }
+
+        nav.aktiv {
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        nav li:hover {
+            background-color: #f0f0f0;
+        }
+
+       
+        nav li a {
+            display: block;
+            color: #000;
+            text-decoration: none;
+        }
+       
+    </style>
+</head>
+<body>
+
+    <!-- Hamburger-Menü Button -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+    <!-- Dropdown-Menü -->
+    <nav id="menu">
+        <ul>
+            <li><a href="Startseite.html">Startseite</a></li>
+            <li><a href="ÜberUns.html">Über uns</a></li>
+            <li><a href="Technik.html">Die Technik</a></li>
+        </ul>
+    </nav>
+
+    <h1>Erklärung zur Barrierefreiheit</h1>
+
+    <p><strong>Stand der Erklärung:</strong> April 2025</p>
+  
+    <p>Diese Erklärung zur digitalen Barrierefreiheit gilt für die Website <em>„Talomat“</em>, ein schulisches Projekt der Gesamtschule Uellendahl-Katernberg im Rahmen des Projektkurses Informatik/Sozialwissenschaften (Q1).</p>
+  
+    <h2>Ziel der Barrierefreiheit</h2>
+    <p>Wir möchten, dass möglichst viele Menschen – unabhängig von technischen Hilfsmitteln, Einschränkungen oder Endgeräten – unsere Seite nutzen können. Dabei orientieren wir uns an den Vorgaben der WCAG (Web Content Accessibility Guidelines).</p>
+  
+    <h2>Barrierefreie Gestaltung</h2>
+    <ul>
+      <li>✔ Klare Navigation durch ein einheitliches Hamburger-Menü</li>
+      <li>✔ Kontraste und Farben sind lesefreundlich gestaltet</li>
+      <li>✔ Die Seite ist responsiv und auf mobilen Geräten gut bedienbar</li>
+      <li>✔ Alle Inhalte sind ohne Maus (nur mit Tastatur) erreichbar</li>
+      <li>✔ Verzicht auf blinkende oder automatisch ablaufende Inhalte</li>
+    </ul>
+  
+    <h2>Aktuell bekannte Einschränkungen</h2>
+    <p>Da es sich um ein Schulprojekt handelt, konnten einige Punkte noch nicht vollständig umgesetzt werden, z. B.:</p>
+    <ul>
+      <li>– Es fehlen derzeit ARIA-Rollen für Screenreader</li>
+      <li>– Keine vollständige Prüfung mit Assistenzsoftware (z. B. Screenreader)</li>
+    </ul>
+  
+    <h2>Kontakt</h2>
+    <p>Wenn Sie auf Barrieren stoßen oder Verbesserungsvorschläge haben, kontaktieren Sie uns bitte:</p>
+    <p>
+      Elias Wille<br>
+      E-Mail: elias@wille-online.net
+    </p>
+    
+    <script>
+        function toggleMenu() {
+    const menu = document.getElementById("menu");
+
+    // Falls das Menü geöffnet ist, schließen – sonst öffnen
+    if (menu.classList.contains("aktiv")) {
+        menu.classList.remove("aktiv");
+    } else {
+        // Erst alle anderen Menüs schließen (falls in Zukunft weitere hinzugefügt werden)
+        document.querySelectorAll("nav").forEach(m => m.classList.remove("aktiv"));
+        menu.classList.add("aktiv");
+    }
+}
+
+    document.addEventListener("click", function (event) {
+        const menu = document.getElementById("menu");
+        const hamburger = document.querySelector(".hamburger");
+
+        // Prüft, ob der Klick außerhalb des Menüs und des Hamburger-Buttons ist
+        if (menu.classList.contains("aktiv") && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+            menu.classList.remove("aktiv");
+        }
+    });
+    </script>
+</body>
+</html>

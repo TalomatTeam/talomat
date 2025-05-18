@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Talomat</title>
+    
+    <style>
+
+        
+         /* Alles zur Website ↓ */
+        
+         html, body {
+            touch-action: manipulation;
+            -ms-touch-action: manipulation;
+            background-color: #4A90E2;
+            }
+            
+        header {
+            width: 100%;
+            background-color: #4A90E2;
+            color: black;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /* Talomat-Logo */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+       /* Hamburger-Button */
+       .hamburger {
+            margin-right: 30px;
+            font-size: 44px;
+            background: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+        }
+
+        /* Menü */
+        nav {
+            position: absolute;
+            top: 70px;
+            right: 95px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            display: none;
+            min-width: 150px; 
+            text-align: right;
+        }
+
+        /* Menü-Items */
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        nav ul li:last-child {
+            border-bottom: none;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #000000;
+            display: block;
+        }
+
+        /* Menü sichtbar machen */
+        nav.aktiv {
+            display: block;
+        }
+
+        footer {
+            width: 100%;
+            background-color: #4A90E2;
+            color: rgb(0, 0, 0);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .footer-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .footer-copy {
+            font-size: 12px;
+            color: #000000;
+        }
+
+
+        /* Alles zum Talomaten ↓ */
+        
+        
+        body {
+            background: url("hintergrundblau") no-repeat center center fixed;
+            background-size: cover;
+            color: #000000;
+            padding-top: 80px; /* Höhe deines Headers */
+            padding-bottom: 80px; /* Höhe deines Footers */
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden; /* verhindert Gesamtscrollen */
+        }
+        h1 {
+            color: #000000;
+            text-align: center;
+        }
+
+        p {
+            text-align: center;
+            font-size: large;
+        }
+
+        #fragen-container {
+            flex: 1;
+            overflow-y: auto; /* erlaubt Scrollen nur innerhalb dieses Bereichs */
+            padding-top: 100px; /* Platz für fixen Header */
+            padding-bottom: 80px; /* Platz für fixen Footer */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .frage-box {
+                    
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            color: black;
+            padding: 35px 20px;
+            border-radius: 10px;
+            display: none;
+            position: relative;
+            width: 100%;
+            max-width: 400px; /* <-- Hier anpassen */
+            text-align: center;
+        }
+       
+        @media (max-width: 600px) {
+            .frage-box {
+                padding: 20px;
+                font-size: 14px;
+            }
+        }
+        .frage-box p {
+            margin-top: 30px;
+        }
+
+        .frage-box::after {
+            content: "";
+            position: absolute;
+            bottom: -30px; /* weiter unten */
+            left: 40px; /* leicht nach rechts verschoben */
+            width: 0;
+            height: 0;
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-top: 35px solid #ffffff; /* Dreieckfarbe */
+            
+        }
+
+        .frage-box.aktiv {
+            display: block;
+        }
+
+        .zurueck-pfeil {
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+        }
+
+        .vorwaerts-pfeil {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: black;
+            cursor: pointer;
+        }
+
+
+        .seitenzahl {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: black;
+        }
+        
+        .antwort-buttons {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .antwort-buttons button {
+            background-color: #4A90E2;
+            color: #000000;
+            padding: 15px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 80%;
+            max-width: 300px;
+            border: none;
+            border-radius: 5px;
+        }  
+        
+        /* Farbänderung für ausgewählte Antworten */
+        .antwort-buttons button.ausgewaehlt[data-wert="1"] {
+        background-color: green !important;
+        color: #ffffff !important;
+        }
+
+        .antwort-buttons button.ausgewaehlt[data-wert="0.5"] {
+        background-color: black !important;
+        color: #ffffff !important;
+        }
+
+        .antwort-buttons button.ausgewaehlt[data-wert="0"] {
+        background-color: red !important;
+        color: #ffffff !important;
+        }
+        .skip-button.ausgewaehlt {
+        background-color: gray !important;
+        color: #ffffff !important;
+        }
+
+        .antwort-buttons button:not(.skip-button) {
+            background-color: #4A90E2;
+            color: #000000;
+        }
+
+        .antwort-buttons .skip-button {
+            background-color: #ffffff;
+            color: black;
+        }
+
+        #ergebnis-button {
+            display: block;
+            margin: 20px auto; /* oben/unten etwas Abstand, horizontal zentriert */
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+
+        #ergebnis-container {
+            display: none;
+            background-color: #ffffff;
+            color: rgb(0, 0, 0);
+            padding: 35px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            width: 90%;
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #global-vorlesen-button {
+            position: absolute;
+            top: calc(100% + 20px); /* 20px unter dem Container */
+            left: 70%; /* mittig, aber leicht nach rechts versetzt */
+            transform: translateX(-50%);
+            background: none;
+            z-index: 999;
+            cursor: pointer;
+            border: none;
+        }
+
+        #global-vorlesen-button .button-icon {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+
+        #global-vorlesen-button:hover .button-icon {
+            border: solid #000;
+        }
+        
+        #linkteilen-button {
+            position: absolute;
+            top: calc(100% + 20px); /* 20px unter dem Container */
+            left: 85%; /* mittig, aber leicht nach rechts versetzt */
+            transform: translateX(-50%);
+            background: none;
+            z-index: 999;
+            cursor: pointer;
+            border: none;
+        }
+
+        #linkteilen-button .button-icon {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+
+        #linkteilen-button:hover .button-icon {
+            border: solid #000;
+        }
+        #leichte-sprache-link {
+            position: absolute;
+            top: calc(100% + 20px); /* 20px unter dem Container */
+            left: 55%; /* mittig, aber leicht nach rechts versetzt */
+            transform: translateX(-50%);
+            background: none;
+            z-index: 999;
+            cursor: pointer;
+
+        }
+
+        #leichte-sprache-link .button-icon {
+            width: 40px;
+            height: 40px;
+            transition: transform 0.2s ease;
+        }
+
+        #leichte-sprache-link:hover .button-icon {
+            border: solid #000;
+        }
+
+        .doppelt-button {
+            background-color: #4A90E2;
+            color: #000000;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 16px;
+            border: none;
+            margin-top: 15px;
+            cursor: pointer;
+            width: 80%;
+        }
+
+        .doppelt-button.aktiv {
+            background-color: gold;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    
+    <header>
+        <div class="logo">Talomat</div>
+        <button class="hamburger" onclick="toggleMenu()">☰</button>
+        <nav id="menu">
+            <ul>
+                <li><a href="Barrierefreiheit.html">Barrierefreiheit</a></li>
+                <li><a href="ÜberUns.html">Über uns</a></li>
+                <li><a href="Technik.html">Die Technik</a>
+            </ul>
+        </nav>
+    </header>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-links">
+                <a href="Impressum.html">Impressum</a>
+                <a href="Datenschutzerklärung.html">Datenschutz</a>
+                <a href="mailto:elias@wille-online.net">Kontakt</a>
+            </div>
+            <div class="footer-copy">
+                &copy; 2025 Talomat. Alle Rechte vorbehalten.
+            </div>
+        </div>
+    </footer>
+
+   
+
+    <div id="fragen-container">
+        <div id="ergebnis-container" class="frage-box" style="display: none;"></div>
+      </div>
+    
+    <script>
+
+    /*Alles zur Website ↓*/
+
+    document.body.style.backgroundImage = "url('Hintergrund.png')";
+    
+    /*Hamburger-Menü*/
+    function toggleMenu() {
+    const menu = document.getElementById("menu");
+
+    // Falls das Menü geöffnet ist, schließen – sonst öffnen
+    if (menu.classList.contains("aktiv")) {
+        menu.classList.remove("aktiv");
+    } else {
+        // Erst alle anderen Menüs schließen (falls in Zukunft weitere hinzugefügt werden)
+        document.querySelectorAll("nav").forEach(m => m.classList.remove("aktiv"));
+        menu.classList.add("aktiv");
+    }
+}
+
+    document.addEventListener("click", function (event) {
+        const menu = document.getElementById("menu");
+        const hamburger = document.querySelector(".hamburger");
+
+        // Prüft, ob der Klick außerhalb des Menüs und des Hamburger-Buttons ist
+        if (menu.classList.contains("aktiv") && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+            menu.classList.remove("aktiv");
+        }
+    });
+    
+    function frageVorlesen(text) {
+    const synth = window.speechSynthesis;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "de-DE"; // Sprache auf Deutsch setzen
+    synth.cancel(); // Vorherige Sprachausgabe abbrechen
+    synth.speak(utterance);
+    }
+
+    function frageVorlesen(index) {
+    const frageText = fragen[index];
+    const synth = window.speechSynthesis;
+
+    // Bestehendes Vorlesen stoppen
+    if (synth.speaking) {
+        synth.cancel();
+    }
+
+    const utterance = new SpeechSynthesisUtterance(frageText);
+    utterance.lang = 'de-DE'; // Deutsch
+    utterance.rate = 1; // Geschwindigkeit
+    synth.speak(utterance);
+    }
+
+    function shareLink() {
+    if (navigator.share) {
+        navigator.share({
+            title: document.title,
+            url: window.location.href
+        }).catch((error) => console.log('Fehler beim Teilen:', error));
+    } else {
+        alert('Teilen wird von deinem Browser nicht unterstützt.');
+    }
+    }
+    /*Alles zum Talomaten ↓*/
+
+        /*Speicher für die Fragen*/
+        const fragen = [
+        "Soll das Renteneintrittsalter gesenkt werden?",
+        "Soll das Arbeitslosengeld erhöht werden?",
+        "Soll es eine einheitliche Krankenversicherung für alle geben?",
+        "Soll das Elterngeld verlängert werden?",
+        "Soll das Kindergeld deutlich erhöht werden?",
+        "Soll die Mehrwertsteuer auf Grundnahrungsmittel abgeschafft werden?",
+        "Soll es eine Vermögenssteuer für Reiche geben?",
+        "Soll die Unternehmenssteuer gesenkt werden?",
+        "Soll die Schuldenbremse abgeschafft werden?",
+        "Soll die CO₂-Steuer für Unternehmen erhöht werden?",
+        "Soll das Schulsystem deutschlandweit vereinheitlicht werden?",
+        "Soll der Digitalunterricht verpflichtend eingeführt werden?",
+        "Soll es kostenloses Mittagessen an allen Schulen geben?",
+        "Soll das BAföG unabhängig vom Einkommen der Eltern gewährt werden?",
+        "Soll die Studiengebühr wieder eingeführt werden?"
+        ];
+
+        /*Speicher für die Antworten*/
+        const parteien = {
+        "Partei A": [1, 0, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0.5, 0.5, 1],
+        "Partei B": [0, 1, 0, 0, 1, 0.5, 0.5, 1, 1, 1, 1, 1, 1, 1, 1],
+        "Partei C": [0.5, 0.5, 0.5, 0.5, 0.5, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0,],
+        "Partei D": [1, 1, 0, 1, 0, 0.5, 0.5, 1, 1, 0, 1, 1, 1, 0, 0]
+        };
+
+        /*Erstellung der Fragenkarten und Speicher der Nutzerantworten*/
+        let benutzerAntworten = new Array(fragen.length).fill(null);
+        let aktuelleFrage = 0;
+
+        const fragenContainer = document.getElementById("fragen-container");
+
+        fragen.forEach((frage, index) => {
+        const frageDiv = document.createElement("div");
+        frageDiv.className = "frage-box";
+        frageDiv.id = `frage-${index}`;
+        frageDiv.innerHTML = `
+        <button class="zurueck-pfeil" onclick="zurueckZurFrage()">←</button>
+        <button class="vorwaerts-pfeil" onclick="naechsteFrage()">→</button>
+       
+</button>
+
+<p>${frage}</p>
+        <div class="antwort-buttons">
+        <button onclick="antwortAuswaehlen(${index}, 1, this)" data-wert="1">Ja</button>
+        <button onclick="antwortAuswaehlen(${index}, 0.5, this)" data-wert="0.5">Neutral</button>
+        <button onclick="antwortAuswaehlen(${index}, 0, this)" data-wert="0">Nein</button>
+        </div>
+        <button class="doppelt-button" onclick="toggleDoppelt(${index}, this)">Doppelte Wertung</button>
+        
+        
+       
+        <button id="global-vorlesen-button" onclick="frageVorlesen(aktuelleFrage)">
+            <img src="LautsprecherIMG.png" alt="Vorlesen" class="button-icon" />
+        </button>
+
+        <button id="linkteilen-button" onclick="shareLink()">
+    <img src="Linkteilen.png" alt="Link teilen" class="button-icon" />
+</button>
+
+
+        <a href="leichtesprache.html" id="leichte-sprache-link">
+            <img src="leichteSpracheIcon.png" alt="Leichte Sprache" class="button-icon" />
+        </a>
+        
+
+        <span class="seitenzahl">${index + 1}/${fragen.length}</span>
+         `;
+
+        fragenContainer.appendChild(frageDiv);
+        });
+
+        document.getElementById(`frage-${aktuelleFrage}`).classList.add("aktiv");
+
+        /*Mit Antwort nächste Frage öffnen und Farbe anpassen*/
+        function antwortAuswaehlen(frageIndex, antwort, button) {
+    const buttons = button.parentElement.querySelectorAll("button");
+
+    // Wenn der Button bereits ausgewählt ist: abwählen
+    if (button.classList.contains("ausgewaehlt")) {
+        benutzerAntworten[frageIndex] = null;
+        button.classList.remove("ausgewaehlt");
+        return; // Keine automatische Weiterleitung zur nächsten Frage
+    }
+
+    // Ansonsten: normale Auswahl
+    benutzerAntworten[frageIndex] = antwort;
+    buttons.forEach(btn => btn.classList.remove("ausgewaehlt"));
+    button.classList.add("ausgewaehlt");
+    setTimeout(naechsteFrage, 300);
+}
+
+
+        /*Ohne Antwort nächste Frage öffnen*/
+        function frageUeberspringen(frageIndex) {
+        benutzerAntworten[frageIndex] = null;
+        const skipButton = document.querySelector(`#frage-${frageIndex} .skip-button`);
+        skipButton.classList.add("ausgewaehlt");
+        setTimeout(naechsteFrage, 300);
+        }
+
+
+        /*Umblättern nach vorne und hinten*/
+        function naechsteFrage() {
+            document.getElementById(`frage-${aktuelleFrage}`).classList.remove("aktiv");
+            if (aktuelleFrage < fragen.length - 1) {
+                aktuelleFrage++;
+                document.getElementById(`frage-${aktuelleFrage}`).classList.add("aktiv");
+            } else {
+                zeigeErgebnisButton();  /*Verknüpfung nach letzter Frage zum Ergebnis-Button*/
+            }
+        }
+        
+        function zurueckZurFrage() {
+            if (aktuelleFrage > 0) {
+                document.getElementById(`frage-${aktuelleFrage}`).classList.remove("aktiv");
+                aktuelleFrage--;
+                document.getElementById(`frage-${aktuelleFrage}`).classList.add("aktiv");
+            }
+        }
+
+        /*Knopf für Ergebnisberechnung und zurück Pfeil*/ 
+        function zeigeErgebnisButton() {
+        const ergebnisContainer = document.getElementById("ergebnis-container");
+        ergebnisContainer.style.display = "block";
+        ergebnisContainer.innerHTML = `
+        <div>
+            <p>Du hast alle Fragen beantwortet!</p>
+            <button class="zurueck-pfeil" onclick="zurueckZuFragen1()">←</button>
+            <div class="antwort-buttons">
+                <button class="antwort-button" onclick="berechneUebereinstimmung()">Ergebnisse anzeigen</button>
+            </div>
+        </div> `;
+        }
+
+        function zurueckZuFragen1() {
+            const ergebnisContainer = document.getElementById("ergebnis-container");
+            ergebnisContainer.style.display = "none";
+            aktuelleFrage = fragen.length - 1;
+            document.getElementById(`frage-${aktuelleFrage}`).classList.add("aktiv");
+        }
+
+        /* Doppelt-Gewichten Funktion */
+        const doppeltGewichtet = new Array(fragen.length).fill(false);
+
+        function toggleDoppelt(frageIndex, button) {
+            doppeltGewichtet[frageIndex] = !doppeltGewichtet[frageIndex];
+            button.classList.toggle('aktiv', doppeltGewichtet[frageIndex]);
+        }
+
+        /* Ergebnisberechnung */
+        function berechneUebereinstimmung() {
+            const ergebnisContainer = document.getElementById("ergebnis-container");
+            ergebnisContainer.innerHTML = "<h2>Ergebnisse</h2>";
+
+            const ergebnisse = {};
+
+            for (const partei in parteien) {
+                let punkte = 0;
+                let maxPunkte = 0;
+                for (let i = 0; i < fragen.length; i++) {
+                    if (benutzerAntworten[i] !== null) {
+                        const gewicht = doppeltGewichtet[i] ? 2 : 1;
+                        const differenz = Math.abs(benutzerAntworten[i] - parteien[partei][i]);
+                        const fragePunkte = (1 - differenz) * gewicht;
+                        punkte += fragePunkte;
+                        maxPunkte += gewicht;
+                    }
+                }
+                const prozent = (punkte / maxPunkte) * 100;
+                ergebnisse[partei] = prozent.toFixed(1);
+            }
+
+            // Ergebnisse sortieren
+            const sortierteParteien = Object.entries(ergebnisse).sort((a, b) => b[1] - a[1]);
+
+            sortierteParteien.forEach(([partei, prozent]) => {
+                const ergebnisText = document.createElement("p");
+                ergebnisText.textContent = `${partei}: ${prozent}% Übereinstimmung`;
+                ergebnisContainer.appendChild(ergebnisText);
+            });
+        }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Datenschutzerklärung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 40px;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        h1 {
+            color: #000;
+        }
+
+        a {
+            color: #000;
+            text-decoration: none;
+        }
+
+        /* Hamburger-Button */
+        .hamburger {
+            font-size: 44px;
+            background: none;
+            border: none;
+            color: black;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1001;
+        }
+
+        /* Menü */
+        nav {
+            line-height: 1;
+            position: fixed;
+            top: 80px;
+            right: 70px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            display: none;
+            min-width: 150px;
+            text-align: left;
+           
+        }
+
+        nav.aktiv {
+            display: block;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        nav li:hover {
+            background-color: #f0f0f0;
+        }
+
+       
+        nav li a {
+            display: block;
+            color: #000;
+            text-decoration: none;
+        }
+    </style>
+
+<body>
+
+    <!-- Hamburger-Menü Button -->
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+
+    <!-- Dropdown-Menü -->
+    <nav id="menu">
+        <ul>
+            <li><a href="Startseite.html">Startseite</a></li>
+            <li><a href="Barrierefreiheit.html">Barrierefreiheit</a></li>
+            <li><a href="ÜberUns.html">Über uns</a></li>
+            <li><a href="Technik.html">Die Technik</a></li>
+        </ul>
+    </nav>
+</head>
+
+  <section>
+    <h1>Datenschutzerklärung</h1>
+    <p>Diese Datenschutzerklärung klärt Sie über die Art, den Umfang und Zweck der Verarbeitung von personenbezogenen Daten (nachfolgend kurz „Daten“) innerhalb unseres Onlineangebotes und der mit ihm verbundenen Webseiten, Funktionen und Inhalte auf.</p>
+
+    <h2>1. Verantwortlicher</h2>
+    <p>
+      Max Mustermann<br>
+      Musterstraße 1<br>
+      12345 Musterstadt<br>
+      E-Mail: <a href="mailto:max@mustermann.de">max@mustermann.de</a>
+    </p>
+
+    <h2>2. Erhebung und Speicherung personenbezogener Daten</h2>
+    <p>
+      Beim Besuch dieser Website werden keine personenbezogenen Daten automatisch erhoben oder gespeichert.<br>
+      Es werden keine Cookies gesetzt und keine Analyse- oder Tracking-Tools verwendet.
+    </p>
+
+    <h2>3. Server-Logfiles</h2>
+    <p>
+      Der Provider der Seiten erhebt und speichert automatisch Informationen in sogenannten Server-Logfiles, die Ihr Browser automatisch übermittelt. Dies sind:
+    </p>
+    <ul>
+      <li>Browsertyp und Browserversion</li>
+      <li>verwendetes Betriebssystem</li>
+      <li>Referrer URL</li>
+      <li>Hostname des zugreifenden Rechners</li>
+      <li>Uhrzeit der Serveranfrage</li>
+      <li>IP-Adresse (anonymisiert)</li>
+    </ul>
+    <p>
+      Eine Zusammenführung dieser Daten mit anderen Datenquellen wird nicht vorgenommen.
+    </p>
+
+    <h2>4. Rechte der betroffenen Personen</h2>
+    <p>Sie haben das Recht auf:</p>
+    <ul>
+      <li>Auskunft über Ihre gespeicherten Daten</li>
+      <li>Berichtigung unrichtiger Daten</li>
+      <li>Löschung Ihrer Daten, soweit dem keine gesetzlichen Aufbewahrungspflichten entgegenstehen</li>
+      <li>Einschränkung der Verarbeitung</li>
+      <li>Datenübertragbarkeit</li>
+      <li>Beschwerde bei einer Datenschutzaufsichtsbehörde</li>
+    </ul>
+
+    <h2>5. Kontakt</h2>
+    <p>
+      Wenn Sie Fragen zum Datenschutz haben, schreiben Sie uns bitte eine E-Mail an: <a href="mailto:max@mustermann.de">max@mustermann.de</a>
+    </p>
+
+    <h2>6. Aktualität und Änderung dieser Datenschutzerklärung</h2>
+    <p>
+      Diese Datenschutzerklärung ist aktuell gültig und hat den Stand April 2025.<br>
+      Durch die Weiterentwicklung unserer Website oder aufgrund geänderter gesetzlicher Vorgaben kann es notwendig werden, diese Datenschutzerklärung zu ändern.
+    </p>
+
+  </section>
+
+    <script>
+        function toggleMenu() {
+    const menu = document.getElementById("menu");
+
+    // Falls das Menü geöffnet ist, schließen – sonst öffnen
+    if (menu.classList.contains("aktiv")) {
+        menu.classList.remove("aktiv");
+    } else {
+        // Erst alle anderen Menüs schließen (falls in Zukunft weitere hinzugefügt werden)
+        document.querySelectorAll("nav").forEach(m => m.classList.remove("aktiv"));
+        menu.classList.add("aktiv");
+    }
+}
+
+    document.addEventListener("click", function (event) {
+        const menu = document.getElementById("menu");
+        const hamburger = document.querySelector(".hamburger");
+
+        // Prüft, ob der Klick außerhalb des Menüs und des Hamburger-Buttons ist
+        if (menu.classList.contains("aktiv") && !menu.contains(event.target) && !hamburger.contains(event.target)) {
+            menu.classList.remove("aktiv");
+        }
+    });
+    </script>
+</body>
+</html>
